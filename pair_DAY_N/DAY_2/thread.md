@@ -1,5 +1,7 @@
 # Thread — Why the Second Prompt Worked
 
+**Link:** [LinkedIn Thread](https://www.linkedin.com/posts/nuhamin-a-e-95n87a190_why-the-second-prompt-worked-httpslnkdin-activity-7457919045963788289-3Nr9?utm_source=share&utm_medium=member_desktop&rcm=ACoAACahjWcB-GSd6J8wRonZO0Rh5aMwXM4ESuc)
+
 **1/6**
 In SOC-01, the Conversion Engine had an honesty rule in the system prompt: don’t overclaim weak hiring signals.
 
