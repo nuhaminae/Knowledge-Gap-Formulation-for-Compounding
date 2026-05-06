@@ -52,7 +52,7 @@ The model’s decision therefore depends on how the entire preceding prompt shap
 
 A long rubric prefix is the large instruction block that comes before the actual candidate output. In my case, the prompt had this structure:
 
-```text
+```markdown
 You are a Tenacious quality-assurance judge.
 
 A GOOD output should:
@@ -108,13 +108,13 @@ One reason the prefix can matter is attention sinks. The StreamingLLM paper obse
 
 For my judge, the early tokens are not neutral. They establish the role and criteria:
 
-```text
+```markdown
 You are a quality-assurance judge...
 A GOOD output...
 A BAD output...
 ```
 
-If the opening frame is heavily about risk, rejection, and violations, those tokens can become a persistent behavioral anchor. The model is not simply judging the candidate in isolation; it is judging through the lens created by the initial rubric.
+If the opening frame is heavily about risk, rejection, and violations, those tokens can become a persistent behavioural anchor. The model is judging through the lens created by the initial rubric, it is not simply judging the candidate in isolation.
 
 This does not mean attention sinks automatically cause over-rejection. It means the first tokens of a long judge prompt are load-bearing. If I start with “catch every possible failure,” I should expect a stricter judge than if I start with “accept outputs that are safe, grounded, and operationally complete.”
 
@@ -128,23 +128,13 @@ A long judge prompt creates exactly this risk. The rubric appears at the beginni
 
 That can produce a subtle failure mode:
 
-```text
+```markdown
 The model remembers the rejection rubric.
 The model sees the final verdict slot.
 The model underweights subtle candidate-specific evidence.
 ```
 
-This is especially dangerous for Tenacious-style sales evaluation because good behavior is often quiet. A good response may say:
-
-```text
-“I cannot tell from the public signal alone, but if this is on your roadmap...”
-```
-
-or:
-
-```text
-“I do not want to overstate capacity from the outside.”
-```
+This is especially dangerous for Tenacious-style sales evaluation because good behaviour is often quiet. A good response may say: “I cannot tell from the public signal alone, but if this is on your roadmap...” or “I do not want to overstate capacity from the outside.”.
 
 Those are good because they are cautious and grounded. But they do not contain loud lexical signals of goodness. Bad outputs often contain louder cues: fake urgency, unsupported pricing, aggressive claims, placeholder links, or obvious prompt-injection compliance.
 
@@ -160,10 +150,8 @@ Its weakness was calibration as a binary gate. It knew the chosen output was bet
 
 That is why I should separate two metrics:
 
-```text
-rank-based pairwise accuracy: does the judge know which response is better?
-strict pairwise accuracy: does it accept the good one and reject the bad one?
-```
+- rank-based pairwise accuracy: does the judge know which response is better?
+- strict pairwise accuracy: does it accept the good one and reject the bad one?
 
 The prompted judge did well on the first but worse on the second. That suggests the issue may not be comprehension. It may be the prompt-induced threshold for calling something `good`.
 
@@ -187,16 +175,14 @@ I would compare these variants:
 
 For each variant, I would measure:
 
-```text
-accuracy
-precision
-recall
-F1
-false negatives on true-good outputs
-strict pairwise accuracy
-mean logprob(good) - logprob(bad)
-margin distribution for good examples
-```
+- accuracy
+- precision
+- recall
+- F1
+- false negatives on true-good outputs
+- strict pairwise accuracy
+- mean logprob(good) - logprob(bad)
+- margin distribution for good examples
 
 The key metric is false negatives. If a shorter or more balanced rubric reduces false negatives without letting many bad outputs through, then the original long prefix likely made the prompted judge over-conservative.
 
