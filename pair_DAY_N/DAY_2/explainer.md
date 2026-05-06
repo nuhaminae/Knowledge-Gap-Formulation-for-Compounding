@@ -7,6 +7,8 @@ When a system prompt failed, a follow-up rewrite fixed it. Here is why.
 
 ---
 
+**Link:** [LinkedIn Article](https://www.linkedin.com/pulse/why-second-prompt-worked-system-prompt-constraints-repair-alemayehu-yov1f)
+
 For [Teancious Conversion Engine](https://github.com/YohannesDereje/The-Conversion-Engine) project, we have the first probe in the **Signal Over-Claiming** category (`SOC-01`). Its role is to test whether the Conversion Engine preserves uncertainty when weak company signals are turned into final sales copy.
 
 In `SOC-01`'s scenario, a company has exactly two open Python roles with `velocity_label="low"`, so the email must not assert “aggressive hiring” or use assertive hiring language. The observed failure was that the LLM still generated ungrounded assertions despite the honesty constraint in the prompt, leading to the diagnosis that the constraint was “prompt-only (soft), not Python-enforced post-generation.”
