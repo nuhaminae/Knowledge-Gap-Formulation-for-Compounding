@@ -1,5 +1,9 @@
 # Thread — β, Margin, and PASS Bias in a Preference-Trained Judge
 
+[LinkedIn Thread Link](https://www.linkedin.com/posts/nuhamin-a-e-95n87a190_thread-%CE%B2-margin-and-pass-bias-in-a-preference-trained-activity-7458253149879898113-Outr?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAACahjWcB-GSd6J8wRonZO0Rh5aMwXM4ESuc)
+
+---
+
 ## Post 1
 
 A preference-trained judge can be accurate overall and still have a dangerous failure mode:
