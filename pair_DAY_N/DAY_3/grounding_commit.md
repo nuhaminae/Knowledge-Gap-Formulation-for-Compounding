@@ -1,104 +1,52 @@
-# Grounding Commit — Week 12 Day 3
+# Grounding Commit — Day 3
 
-**Project:** Tenacious-Bench — DPO Judge Post-Training Analysis
-**Asker:** Eyobed Feleke
-**Date:** 2026-05-07
+**Asker:** Eyobed Feleke  
+**Commit:** [b5473fe — docs: ground Week 12 Day 3 gap — CPO β mechanics and PASS bias diagnosis](https://github.com/eyobed7b/Sales-Evaluation-Bench-trp/commit/b5473fe)  
 **Artifacts edited:**
 
-- `src/training/train_judge.py`
-- `configs/training_config.yaml`
-- `src/evaluation/eval_judge.py`
-- `src/evaluation/eval_prompted_judge.py`
-- `models/model_card.md`
-- `reports/final_report_v2.md`
+- `week11/Sales-Evaluation-Bench-trp/training/train_simpo.py`
+- `week11/Sales-Evaluation-Bench-trp/training/hyperparameters.json`
+- `week11/Sales-Evaluation-Bench-trp/scoring_evaluator.py`
+- `week11/Sales-Evaluation-Bench-trp/memo.md`
 
 ---
 
 ## What Changed
 
-**train_judge.py** — added a comment block at the top of the DPO training loop
-documenting the role of the reference model. Before this change the script had a `β=0.1`
-value with no rationale. The comment now explains that β is the KL penalty controlling
-how far the trained policy drifts from the reference, and that the reference model's
-frozen log-probs are what distinguish DPO from a simple supervised signal on `chosen`
-outputs. Also noted that the 65-pair dataset size is sufficient only because the base
-model already has the underlying capability — the training is recalibrating a boundary,
-not building judgment from scratch.
-
-**configs/training_config.yaml** — added inline rationale for each hyperparameter
-that was previously undocumented:
-
-```yaml
-dpo_beta: 0.1        # KL penalty; low value allows larger boundary shift from reference
-num_train_epochs: 3  # 65 pairs × 3 epochs = 195 gradient steps; sufficient for recalibration
-learning_rate: 5e-4  # standard LoRA LR; higher risks collapsing reference model alignment
-```
-
-Added a `next_run` block with the diagnostic sweep values derived from the explainer:
-
-```yaml
-next_run:
-  dpo_beta: [0.05, 0.1, 0.2]          # sweep to find minimum β that retains calibration
-  pass_threshold: [0.5, 0.55, 0.6]    # threshold sweep before retraining
-  eval_metrics: [margin_mean, margin_std, per_source_accuracy]
-```
-
-**eval_judge.py** — added reward margin logging to the evaluation loop. Previously the
-script only reported binary accuracy. It now also computes and logs:
+**train_simpo.py** — added a 20-line comment block above `CPO_BETA = 2.0` explaining
+what β controls (preference-pressure scalar, global reward-scale knob affecting all pairs),
+why β=2.0 may over-regularize on sparse disqualification pairs, and the output-length
+asymmetry warning (PASS ~11 tokens, FAIL ~54 tokens) that must be addressed before
+enabling `loss_type="simpo"`. Added the next-run sweep config as commented-out code:
 
 ```python
-chosen_logprob = model.score(prompt, chosen)
-rejected_logprob = model.score(prompt, rejected)
-margin = chosen_logprob - rejected_logprob
-metrics["margin_mean"] = np.mean(margins)
-metrics["margin_std"] = np.std(margins)
-metrics["margin_below_threshold"] = np.mean([m < 0.5 for m in margins])
+# config = CPOConfig(beta=1.0, loss_type="simpo", gamma_beta_ratio=0.4, ...)
 ```
 
-Running this on the held-out set showed a mean margin of 1.83 with std 0.61 —
-well-separated, which rules out the overfitting hypothesis as the primary explanation
-and supports calibration improvement as the dominant cause of the accuracy gain.
+**hyperparameters.json** — added `beta_rationale`, `loss_type_note`, and a
+`simpo_next_run` block documenting the prerequisite output-length equalization step and
+the proposed next config (`beta=1.0`, `loss_type="simpo"`, `gamma_beta_ratio=0.4`).
 
-**eval_prompted_judge.py** — added a `--base-model` flag so the prompted judge can be
-run against the same base model used for DPO (rather than a different checkpoint). This
-creates a controlled comparison: prompted judge on base model vs DPO judge on same base
-model. Running this showed the prompted baseline on the same base model scores 74.36%,
-confirming the 96.15% result is attributable to DPO weight-level learning, not a stronger
-base model.
+**scoring_evaluator.py** — added two new fields to `summary_stats()`:
 
-**models/model_card.md** — replaced the single-line training description ("DPO fine-tuned
-on 65 preference pairs") with a mechanistic account:
+- `false_pass_rate_on_expected_fail` — fraction of expected-fail tasks the judge
+  incorrectly passed; the primary PASS bias metric
+- `category_recall_on_expected_fail` — per-category breakdown, enabling comparison
+  of ICP misclassification recall against other failure categories
 
-- What the adapter encodes: a recalibrated decision boundary between acceptable and bad
-  outputs, not new domain knowledge
-- Why 65 pairs generalizes: base model capability is sufficient; DPO shifts threshold
-- Known limitations: small dataset means rare failure modes not represented in training
-  pairs may not generalize; per-source-mode accuracy should be verified before deployment
-- Diagnostic results: mean held-out margin 1.83, per-source-mode accuracy consistent
-  across all three source modes in the benchmark
-
-**reports/final_report_v2.md** — updated the results section to replace the bare
-accuracy comparison ("prompted judge: 76.92%, DPO judge: 96.15%") with a mechanistic
-interpretation paragraph:
-
-> The prompted judge applied the rubric with the base model's inherited conservatism
-> intact, producing a high true-negative rate but an elevated false-negative rate on
-> borderline-acceptable outputs. DPO training on 65 preference pairs shifted the decision
-> boundary by updating the model's log-prob ratio between acceptable and bad outputs
-> relative to the frozen reference. The held-out reward margin distribution (mean 1.83,
-> std 0.61) indicates the improvement reflects genuine calibration gain rather than
-> overfitting to training-set style patterns. Per-source-mode accuracy is consistent
-> across all benchmark source modes, further supporting generalization over memorization.
-
----
+**memo.md** — replaced the vague "PASS bias on ICP misclassification tasks is unresolved"
+statement with a mechanistic explanation of two root causes (output-length asymmetry under
+raw log-prob reward; β over-regularization on sparse disqualification pairs) and a
+four-step diagnostic plan: threshold sweep first, then SimPO loss with length equalization,
+then β sweep only if needed.
 
 ## Why These Changes
 
-Before the explainer, the accuracy improvement was a number without a cause. The artifacts
-reported what happened but not why. After understanding that DPO's mechanism is a
-log-prob margin update against a frozen reference — and that 65 pairs generalizes because
-the base model already has the underlying capability — every artifact could be updated
-with a specific, defensible claim rather than a vague performance note. The reward margin
-computation in `eval_judge.py` is the single most load-bearing addition: it converts
-the binary accuracy result into evidence that distinguishes calibration improvement from
-overfitting, which is the question a reader of `reports/final_report_v2.md` will ask first.
+Before reading the peer's explainer, the PASS bias was listed as a known limitation
+without a mechanism or a fix path. I knew β=2.0 was the config but could not say what β
+physically controls, why the length asymmetry matters, or which lever to pull first. After
+understanding that β is a global reward-scale knob and that CPO's raw log-prob reward
+creates a structural length confound, every artifact could be updated with a specific,
+testable claim. The `scoring_evaluator.py` change is the most immediately useful: it adds
+the per-category false-PASS diagnostic that was missing and turns the PASS bias from a
+reported observation into a measurable, attributable metric.
