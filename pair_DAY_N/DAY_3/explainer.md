@@ -1,5 +1,7 @@
 # Explainer — β, Margin, and PASS Bias in a Preference-Trained Judge
 
+[LinkedIn Article Link](https://www.linkedin.com/pulse/explainer-%25CE%25B2-margin-pass-bias-preference-trained-judge-alemayehu-ar4lf)
+
 ## The Question
 
 The question is:
