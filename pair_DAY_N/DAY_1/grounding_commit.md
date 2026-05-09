@@ -6,7 +6,7 @@ Last week, I reported that the prompt-engineered judge helped but was too conser
 
 Before this, my explanation was mostly descriptive:
 
-```text
+```markdown
 Prompting helped, but DPO was better calibrated.
 ```
 
@@ -35,7 +35,7 @@ This grounding work improves the following Week 11 artifacts:
 
 I will add a prompt-ablation mode to the prompted judge evaluator.
 
-### Current behavior
+### Current behaviour
 
 The evaluator uses one prompt template:
 
@@ -48,7 +48,7 @@ candidate output
 Verdict:
 ```
 
-### New behavior
+### New behaviour
 
 The evaluator should support multiple templates:
 
@@ -99,7 +99,7 @@ This makes prompt calibration reproducible rather than an informal observation.
 
 The updated evaluator should write:
 
-```text
+```markdown
 reports/prompt_ablation/current_long_rubric_metrics.json
 reports/prompt_ablation/short_neutral_metrics.json
 reports/prompt_ablation/candidate_first_metrics.json
@@ -130,7 +130,7 @@ Each metrics file should include:
 
 The most important field is:
 
-```text
+```markdown
 false_negatives
 ```
 
@@ -170,13 +170,13 @@ I will revise the blog post’s “Prompting vs DPO” section.
 
 ### Old explanation
 
-```text
+```markdown
 Prompting helped, but DPO was better.
 ```
 
 ### New explanation
 
-```text
+```markdown
 The prompted judge was not simply weaker. It was differently calibrated. It ranked all pairs correctly, but as a binary gate it was too conservative. The likely failure mode is that a long, failure-heavy rubric made the model search aggressively for disqualifying flaws. DPO tuning improved the acceptance boundary: it preserved strong rejection of bad outputs while accepting more valid good outputs.
 ```
 
@@ -188,13 +188,13 @@ I will run the same held-out set through each prompt variant.
 
 ### Held-out data
 
-```text
+```markdown
 tenacious_bench/held_out/held_out.jsonl
 ```
 
 ### Metrics
 
-```text
+```markdown
 accuracy
 precision
 recall
@@ -226,11 +226,11 @@ The hypothesis is weakened if all prompt variants keep the same false-negative p
 
 ## What I Understand Now
 
-Before this question, I treated the prompt-engineered judge as a simple baseline. Now I understand it as an inference-time system whose behavior is shaped by prompt layout, token position, and log-prob margins.
+Before this question, I treated the prompt-engineered judge as a simple baseline. Now I understand it as an inference-time system whose behaviour is shaped by prompt layout, token position, and log-prob margins.
 
 The key insight is:
 
-```text
+```markdown
 Prompting does not just tell the judge what to evaluate.
 Prompting also changes the judge's calibration.
 ```
@@ -254,7 +254,7 @@ The grounding commit will:
 
 ## Expected Diff
 
-```text
+```markdown
 modified: src/evaluation/eval_prompted_judge.py
 modified: configs/eval_config.yaml
 modified: reports/final_report_v2.md
