@@ -2,6 +2,10 @@
 
 ---
 
+[LinkedIn Article](https://www.linkedin.com/pulse/inference-time-mechanics-time-explainer-does-long-rubric-alemayehu-wlsjf)
+
+---
+
 Can a Long Judge Rubric Make an LLM Over-Reject Good Outputs?
 
 ---
@@ -16,7 +20,7 @@ The main failure I observed when building the conversion engine was not that the
 
 A week ago, I turned that failure into a benchmark and training problem. I built Tenacious-Bench v0.1 from trace-derived, programmatic, synthetic, and adversarial examples, then trained a LoRA/DPO judge to evaluate candidate sales-agent outputs before they would be sent. In that sense, `Tenacious-Bench v0.1` was a direct quality-control layer for `Tenacious Conversion Engine`.
 
-The conversion engine agent generates or proposes an action, and the bench judge scores whether the output is safe, grounded, and action-complete. In both projects, the important question is what happens when the system is actually running: how the model processes a long prompt, how a judge’s rubric or DPO scoring changes the final decision, how much latency and cost the extra judge call adds, and whether prompt layout, attention behavior, caching, and log-prob scoring affect whether the system accepts or rejects a candidate response.
+The conversion engine agent generates or proposes an action, and the bench judge scores whether the output is safe, grounded, and action-complete. In both projects, the important question is what happens when the system is actually running: how the model processes a long prompt, how a judge’s rubric or DPO scoring changes the final decision, how much latency and cost the extra judge call adds, and whether prompt layout, attention behaviour, caching, and log-prob scoring affect whether the system accepts or rejects a candidate response.
 
 ---
 
