@@ -1,4 +1,4 @@
-# Sources — Attention Sinks, Long-Prefix Behavior, and Judge Calibration
+# Sources — Attention Sinks, Long-Prefix behaviour, and Judge Calibration
 
 ## Source 1 — Efficient Streaming Language Models with Attention Sinks
 
@@ -11,7 +11,7 @@ Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, Mike Lewis. “Efficient St
 This paper gives the mechanism behind “attention sinks.” It shows that initial tokens can receive strong attention scores even when they are not semantically important. This matters for my question because my prompted judge begins with a long rubric. If the first tokens frame the model as a strict QA auditor, they may have an outsized influence on the final `good` vs. `bad` decision.
 
 **Key idea I used:**  
-Early prompt tokens can become persistent attention anchors. Therefore, the opening section of a judge prompt is not neutral; it can shape the model’s decision behavior throughout inference.
+Early prompt tokens can become persistent attention anchors. Therefore, the opening section of a judge prompt is not neutral; it can shape the model’s decision behaviour throughout inference.
 
 ---
 
@@ -56,7 +56,7 @@ Judge prompts should be evaluated as mechanisms, not just as instructions. If ca
 - `reports/final_report_v2.md`
 
 **Why I used them:**  
-These artifacts show the observed behavior that motivated the question: the prompted judge achieved perfect precision but lower recall, meaning it caught every bad output but over-rejected some good ones.
+These artifacts show the observed behaviour that motivated the question: the prompted judge achieved perfect precision but lower recall, meaning it caught every bad output but over-rejected some good ones.
 
 **Key result used:**
 
