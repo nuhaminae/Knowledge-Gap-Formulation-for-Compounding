@@ -1,45 +1,47 @@
-# Portfolio Update — How Week 12 Improved My Week 3, 10 and 11 Work
+# Portfolio Update — From Working Demos to Defensible FDE Systems
 
-Week 12 turned previous projects from working demos into more defensible FDE artifacts. The five grounding commits collectively improved three things: mechanism attribution, evaluation reliability, and production diagnosability.
+This update summarises how my grounding commits from **Knowledge Gap Formulation for Compounding** improved my earlier portfolio projects: **The Conversion Engine**, **Tenacious-Bench and the DPO Judge**, and **Document Intelligence Refinery**. The caveat is that I worked across **seven unique questions total**: four gaps I named and three peer gaps I researched, with the first day spent researching my own question.
 
 ## The Conversion Engine
 
-My Week 10 Conversion Engine already implemented the core sales-automation path: classify a prospect reply, coordinate HubSpot, generate a Cal.com booking link, draft a response, and send through Resend. The weakness was observability. A failed scheduling flow could collapse into “agent failed,” without showing whether the fault came from the LLM, orchestration, a bad tool argument, HubSpot, Cal.com, Resend, stale CRM state, or missing fallback logic.
+**The Conversion Engine** already had a functional sales-automation path: classify a prospect reply, coordinate HubSpot, generate a Cal.com booking link, draft a response, and send through Resend. The weakness was not capability; it was diagnosability. If a warm-lead scheduling flow failed, the system could not clearly say whether the model, scaffold, tool arguments, external API, CRM state, fallback policy, or final delivery caused the failure.
 
-The Week 12 grounding commits added a typed failure-attribution layer. I added schemas for per-turn traces, persistent JSONL trace writing, typed tool-result wrappers, traced HubSpot/Cal.com/Resend wrappers, confidence and alternatives in reply classification, and a failure-attribution resolver. I also updated the probe library with trace-resolvable labels. This means a warm-lead scheduling failure can now be debugged as a causal sequence rather than a generic outcome.
+The grounding commits added a step-level failure-attribution layer. I added typed trace schemas, JSONL trace persistence, typed tool-result wrappers, traced service wrappers for HubSpot/Cal.com/Resend, confidence and alternatives in reply classification, and a failure-attribution resolver. I also updated the probe library with trace-resolvable failure labels.
 
-For an FDE manager, this matters because production agents fail at interfaces. The improved Conversion Engine now shows that I understand not only how to wire tools together, but how to make those tool interactions auditable.
+For a hiring manager, the signal is that I can build and instrument an agentic workflow, not just demo one. The system now moves closer to production-grade observability: every failed business outcome can be tied to a responsible stage.
 
 ## Tenacious-Bench and the DPO Judge
 
-My Week 11 project built a Tenacious-specific benchmark and trained a DPO judge. The headline result was strong: the fine-tuned judge outperformed the prompted judge on strict pairwise accuracy. But before Week 12, my documentation treated that mostly as a metric improvement.
+**Tenacious-Bench and the DPO Judge** produced a strong headline result: the DPO-trained judge outperformed the prompted judge. Before the grounding work, that result was reported mostly as a metric improvement. The Week 12 work made the interpretation more rigorous.
 
-The grounding commits updated the decision memo and model card to explain what DPO changed compared with prompting. The prompted judge had the rubric in context, while DPO moved preference pressure into LoRA adapter weights through chosen/rejected log-prob margins against a frozen reference model. I now frame the result as a likely decision-boundary and calibration shift, while explicitly naming overfitting and benchmark-style memorization as risks to test.
+I updated the model card and decision memo to explain what DPO changed compared with prompting. Prompting placed the rubric in context; DPO moved the preference signal into LoRA adapter weights through chosen/rejected log-prob margins against a frozen reference model. The result is now framed as likely decision-boundary movement and calibration improvement, not as unsupported proof that the model learned fully general Tenacious-specific reasoning.
 
-For an FDE manager, this matters because I am not overclaiming “fine-tuning worked.” I can explain the mechanism, name the alternative hypotheses, and list the diagnostics needed to validate the claim.
+I also clarified the prompted-judge side of the project: long rubric prefixes can affect binary calibration. A strict rubric may help catch bad outputs while also over-rejecting acceptable ones. That means prompted baselines require prompt-layout and threshold diagnostics, not just a single reported score.
+
+For a hiring manager, the signal is that I can distinguish a leaderboard improvement from a mechanism-level claim. I also know what diagnostics remain: reward-margin distributions, per-source-mode accuracy, failed-pair inspection, threshold sweeps, and same-base prompted comparison.
 
 ## Document Intelligence Refinery
 
-The Document Intelligence Refinery grounding work improved my tool-router design. The repo exposed FastText, Layout-Aware, and Vision-Augmented extraction strategies, but the observed run collapsed to Vision. Week 12 clarified that the missing concept was Gate 2: post-extraction quality validation.
+**Document Intelligence Refinery** had a multi-strategy extraction architecture: FastText/pdfplumber, Layout-Aware/Docling, and Vision-Augmented extraction. The risk was tool-selection collapse: every document could end up at Vision without proof that cheaper tools failed.
 
-I added or planned changes around output-quality scoring, extractor confidence remeasurement, model schema updates, and extraction rules. Instead of treating triage confidence as extraction quality, the system now has a path to measure whether an extractor actually produced usable blocks, bounding boxes, tables, and provenance.
+The grounding work clarified the three-gate router model. Gate 1 chooses an initial tool from the document profile. Gate 2 measures the actual extraction output. Gate 3 accepts or escalates based on evidence. This led to changes around output-quality schemas, post-extraction quality scoring, extractor confidence remeasurement, and configurable quality thresholds.
 
-For an FDE, this shows I can reason about cost-quality routing. I do not simply reach for the strongest tool. I design a router that can justify escalation.
+For a hiring manager, the signal is cost-quality judgment. I am not simply calling the strongest or most expensive tool. I am designing a router that can justify escalation.
 
-## Evaluation Reliability
+## Evaluation integrity
 
-Across the Week 11 judge work, I also added a clearer position-bias mitigation pattern: pairwise judge results should be order-swapped. A stable content preference should survive both A/B and B/A presentation. This protects Delta A/B reporting from inflated slot effects.
+The week also improved how I think about LLM-as-a-judge systems. A pairwise judge can be biased by position, length, or self-preference. The key mitigation I added to my canon is order-swapped judging: evaluate A/B and B/A, map labels back to original candidate IDs, and only count stable wins.
 
-For an FDE, this matters because evaluation artifacts are often more fragile than model code. I now know how to turn known LLM-judge biases into harness-level controls.
+For a hiring manager, the signal is that I can protect evaluation metrics from artifacts. I now treat the harness as part of the system, not an afterthought.
 
-## Overall portfolio effect
+## Portfolio-level improvement
 
-Together, the five grounding commits make my portfolio more credible in three ways:
+Collectively, these grounding commits improve my portfolio in five ways:
 
-1. **Traceability:** The Conversion Engine now has a design for step-level causal failure attribution.
-2. **Calibration:** The Tenacious-Bench judge documentation now explains DPO as boundary/margin behavior, not just a scoreboard win.
-3. **Tool routing:** The Document Intelligence Refinery now distinguishes pre-extraction triage from post-extraction quality.
-4. **Evaluation integrity:** The judge pipeline now has a pattern for order-invariant comparison.
-5. **Production judgment:** Each project now names its remaining risks instead of hiding them behind aggregate metrics.
+1. **Traceability:** The Conversion Engine now has a causal trace design for model/tool/scaffold failures.
+2. **Mechanism clarity:** Tenacious-Bench and the DPO Judge now explains why DPO may have improved behavior.
+3. **Prompt calibration:** The prompted judge is now treated as a system that needs layout and threshold diagnostics.
+4. **Cost-aware routing:** Document Intelligence Refinery now distinguishes pre-extraction triage from post-extraction quality.
+5. **Evaluation rigor:** Judge evaluations now include concrete bias-mitigation patterns.
 
-The most important change is that I can now defend the “why” behind the systems I built. I can explain when a model is responsible, when the scaffold is responsible, when the tool is responsible, and when the evaluation harness itself may be misleading. That is the difference between a prototype and FDE-grade engineering.
+The strongest signal across the portfolio is that I can revisit shipped work, find the hidden mechanism gap, research it, teach it, and then edit the artifact. That is the FDE habit I developed through **Knowledge Gap Formulation for Compounding**.
