@@ -1,8 +1,12 @@
 # Explainer — Fixing Position Bias in an LLM Judge with Order-Swapped Evaluation
 
-## The Question
+---
 
-The question is:
+[LinkedIn Link](https://www.linkedin.com/pulse/explainer-fixing-position-bias-llm-judge-evaluation-nuhamin-alemayehu-yjqwe)
+
+---
+
+## The Question
 
 > How can we implement position bias mitigation in our judge system, such as by modifying the judge prompt to evaluate pairs in both orders, A-first and B-first, and only count wins that hold across both evaluations?
 
