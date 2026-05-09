@@ -8,7 +8,7 @@ Lin Shi, Chiyu Ma, Wenhua Liang, Weicheng Ma, Soroush Vosoughi. “Judging the J
 **Link:** [Judging the Judges: A Systematic Study of Position Bias in LLM-as-a-Judge](https://arxiv.org/abs/2406.07791)
 
 **Why I used it:**  
-This paper directly studies position bias in LLM-as-a-judge systems. It defines position bias as a judge’s tendency to favor answers based on their position in the prompt rather than their content, and introduces metrics such as repetition stability, position consistency, and preference fairness.
+This paper directly studies position bias in LLM-as-a-judge systems. It defines position bias as a judge’s tendency to favour answers based on their position in the prompt rather than their content, and introduces metrics such as repetition stability, position consistency, and preference fairness.
 
 **Key idea I used:**  
 A pairwise judge decision is not fully reliable unless it is tested for stability under answer-position changes. This supports the order-swapping mitigation: evaluate A/B and B/A, then only count wins that persist across both orders.
