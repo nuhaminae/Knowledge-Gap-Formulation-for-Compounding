@@ -1,5 +1,11 @@
 # Thread — Fixing Position Bias in an LLM Judge
 
+---
+
+[LinkedIn Thread Post](https://www.linkedin.com/posts/nuhamin-a-e-95n87a190_fixing-position-bias-in-an-llm-judge-https-ugcPost-7458778329500942336-CDoI?utm_source=share&utm_medium=member_desktop&rcm=ACoAACahjWcB-GSd6J8wRonZO0Rh5aMwXM4ESuc)
+
+---
+
 ## Post 1
 
 Pairwise LLM judges can look objective while still having a simple failure mode:
@@ -20,10 +26,10 @@ That helps, but it is still only a prompt instruction.
 
 The stronger fix is procedural: evaluate every pair twice.
 
-```text
+```markdown
 Run 1: A = candidate 1, B = candidate 2
 Run 2: A = candidate 2, B = candidate 1
-````
+```
 
 ## Post 3
 
@@ -43,13 +49,13 @@ If the trained method is always shown first and the baseline is always shown sec
 
 So compute:
 
-```text
+```markdown
 stable Delta A = wins that survive A/B and B/A order swap
 ```
 
 Also report:
 
-```text
+```markdown
 unstable pair rate
 position bias flag count
 inconclusive rate
