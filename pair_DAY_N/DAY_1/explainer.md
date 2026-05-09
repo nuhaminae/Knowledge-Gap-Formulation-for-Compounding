@@ -38,13 +38,13 @@ My hypothesis was: **yes, it is plausible. The mechanism comes from how transfor
 
 At inference time, a language model does not read a prompt like a human reading a checklist. It tokenizes the whole prompt, processes those tokens through attention layers, and produces a distribution over the next token. In my prompted judge, the next token decision was essentially:
 
-```text
+```markdown
 Verdict: good
-````
+```
 
 versus:
 
-```text
+```markdown
 Verdict: bad
 ```
 
@@ -88,13 +88,13 @@ The problem is that this prefix does more than inform the model. It frames the w
 
 That matters because my binary label was not “perfect” vs. “bad.” It was “acceptable/good” vs. “bad/rejected.” A candidate output can be acceptable even if it is not ideal. A failure-heavy rubric can accidentally shift the boundary from:
 
-```text
+```markdown
 safe enough and action-complete → good
 ```
 
 to:
 
-```text
+```markdown
 not perfect → bad
 ```
 
