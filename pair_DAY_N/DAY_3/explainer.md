@@ -10,7 +10,7 @@ The question is:
 
 In plain English, this is a question about how hard the training objective pushes the model to separate correct verdicts from incorrect verdicts.
 
-For a sales-compliance judge, PASS bias means the model is too willing to say an email is acceptable. That is especially dangerous on disqualification tasks, where the correct behavior is to reject, fail, or escalate the draft. If a disqualification case receives a PASS, the judge has allowed the exact failure it was trained to catch.
+For a sales-compliance judge, PASS bias means the model is too willing to say an email is acceptable. That is especially dangerous on disqualification tasks, where the correct behaviour is to reject, fail, or escalate the draft. If a disqualification case receives a PASS, the judge has allowed the exact failure it was trained to catch.
 
 ---
 
@@ -36,7 +36,7 @@ In preference optimisation, the model sees a pair:
 prompt
 chosen response
 rejected response
-````
+```
 
 For a disqualification task, the pair often looks like:
 
