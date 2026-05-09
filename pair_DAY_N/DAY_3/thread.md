@@ -43,7 +43,7 @@ The key missing lever for PASS bias may be the target reward margin.
 
 A margin says:
 
-```text
+```markdown
 chosen should not merely beat rejected;
 it should beat it by enough.
 ```
