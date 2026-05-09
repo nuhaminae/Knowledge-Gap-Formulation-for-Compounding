@@ -12,7 +12,7 @@
 
 This is a strong question because it moves beyond “LLM judges can be biased” and asks for an implementation-level fix.
 
-In pairwise LLM judging, the model sees two candidate answers and chooses the better one. The problem is that the judge may prefer a candidate because of where it appears in the prompt, not because of its content. If the judge tends to favor the first answer, then Candidate A can win when shown first and lose when shown second. That is position bias.
+In pairwise LLM judging, the model sees two candidate answers and chooses the better one. The problem is that the judge may prefer a candidate because of where it appears in the prompt, not because of its content. If the judge tends to favour the first answer, then Candidate A can win when shown first and lose when shown second. That is position bias.
 
 For a benchmark or ablation harness, this matters because it can inflate the measured improvement of a method. If the trained method is always placed in slot A and the baseline is always placed in slot B, then some “wins” may be slot wins, not method wins.
 
@@ -36,7 +36,7 @@ B = candidate_2
 Pass 2:
 A = candidate_2
 B = candidate_1
-````
+```
 
 Then the system compares the two results.
 
@@ -67,7 +67,7 @@ Judge only the content.
 
 That instruction is good, but it is not sufficient. The model may still have a learned tendency to prefer the first or second answer, especially when the candidates are close in quality.
 
-The stronger fix is behavioral: force the judge to make the same decision under both orders. If the judge cannot do that, the evaluation should not pretend the result is stable.
+The stronger fix is behavioural: force the judge to make the same decision under both orders. If the judge cannot do that, the evaluation should not pretend the result is stable.
 
 In other words:
 
