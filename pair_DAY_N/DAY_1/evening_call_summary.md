@@ -96,7 +96,7 @@ Verdict:""".strip()
 
 and the prompted judge result had this pattern:
 
-| Prompted judge behavior         |  Result |
+| Prompted judge behaviour         |  Result |
 | ------------------------------- | ------: |
 | Bad outputs correctly rejected  | 26 / 26 |
 | Good outputs correctly accepted | 20 / 26 |
