@@ -1,6 +1,5 @@
 # Evening Call Summary
 
-
 **Participants:** Yohannes Dereje and Nuhamin Alemayehu
 **Duration:** ≥45 minutes
 
