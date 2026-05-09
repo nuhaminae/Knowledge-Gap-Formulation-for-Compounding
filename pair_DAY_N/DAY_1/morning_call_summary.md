@@ -4,7 +4,7 @@ I have deliberated among four questions before landing on the attention sink ang
 
 To connect my Week 11's **Direct Preference Optimisation** (DPO) judge to the topic of **Inference-time mechanics**, I have looked at the scripts and artifacts I have produced and noticed that I have proved accuracy lift, but did not yet deeply justify **latency/cost mechanics** if the judge runs in the Week 10 Conversion Engine loop.
 
-The Week 10 Tenacious challenge makes this especially relevant because it required p50/p95 latency, cost per lead, trace-backed claims, and channel-aware production behavior for email/SMS/CRM/calendar workflows. My Week 11 judge improved strict pairwise accuracy, but my own final-report feedback said the production recommendation needed stronger quantitative grounding around cost and latency.
+The Week 10 Tenacious challenge makes this especially relevant because it required p50/p95 latency, cost per lead, trace-backed claims, and channel-aware production behaviour for email/SMS/CRM/calendar workflows. My Week 11 judge improved strict pairwise accuracy, but my own final-report feedback said the production recommendation needed stronger quantitative grounding around cost and latency.
 
 ## Four questions that were up for deliberation
 
@@ -34,6 +34,6 @@ This connects more directly to Week 10’s trace-backed production requirements,
 
 ### Option D
 
-My Week 11 prompted judge uses a long rubric before every candidate output. How do attention sinks and long-prefix behavior affect judge calibration at inference time, and could the rubric prefix itself bias the model toward over-rejecting good outputs?
+My Week 11 prompted judge uses a long rubric before every candidate output. How do attention sinks and long-prefix behaviour affect judge calibration at inference time, and could the rubric prefix itself bias the model toward over-rejecting good outputs?
 
 This is interesting because my prompted judge had perfect precision but lower recall, meaning it was too conservative.
