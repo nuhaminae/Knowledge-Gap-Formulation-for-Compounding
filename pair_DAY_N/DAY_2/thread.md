@@ -51,7 +51,7 @@ So the answer is not simply “user prompts are stronger than system prompts.”
 
 The system prompt has higher formal authority, but the follow-up turn had higher local salience: it was recent, concrete, diagnostic, and named the exact bad phrase.
 
-It made the correct behavior easier to predict.
+It made the correct behaviour easier to predict.
 
 ---
 
