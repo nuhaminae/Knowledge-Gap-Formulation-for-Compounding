@@ -2,7 +2,7 @@
 
 ## Question
 
-My Tenacious Bench prompted judge used a long rubric before every candidate output. How do attention sinks and long-prefix behavior affect judge calibration at inference time, and could the rubric prefix itself bias the model toward over-rejecting good outputs?
+My Tenacious Bench prompted judge used a long rubric before every candidate output. How do attention sinks and long-prefix behaviour affect judge calibration at inference time, and could the rubric prefix itself bias the model toward over-rejecting good outputs?
 
 ## Gap-Closure Judgment
 
@@ -12,7 +12,7 @@ My Tenacious Bench prompted judge used a long rubric before every candidate outp
 
 Before this question, I understood the prompted judge mostly as a baseline: it was the same base model as the DPO judge, but prompted with a rubric instead of fine-tuned. I could report the result — 100% precision, 76.92% recall, and 76.92% strict pairwise accuracy — but I could not explain why it behaved that way beyond saying it was “too conservative.”
 
-I now understand that the prompted judge’s behavior is not only determined by the rubric content, but also by the **inference-time structure** of the prompt. A long rubric prefix can shape the model’s next-token distribution before it ever reaches the candidate output. If that prefix is failure-heavy, the model may become excellent at detecting bad outputs while becoming too strict about what counts as good.
+I now understand that the prompted judge’s behaviour is not only determined by the rubric content, but also by the **inference-time structure** of the prompt. A long rubric prefix can shape the model’s next-token distribution before it ever reaches the candidate output. If that prefix is failure-heavy, the model may become excellent at detecting bad outputs while becoming too strict about what counts as good.
 
 ## The Mechanism That Landed
 
@@ -29,13 +29,13 @@ This explains my bench project's prompted judge result more precisely. The promp
 
 I now distinguish between two evaluation questions:
 
-```text
+```markdown
 Does the judge know which response is better?
-````
+```
 
 and:
 
-```text
+```markdown
 Does the judge accept the good response and reject the bad one?
 ```
 
@@ -60,4 +60,4 @@ This closes the gap enough for me to make the following The Bench project's port
 
 ## Final Signoff
 
-This gap is closed because I can now explain the prompted judge’s over-rejection behavior as a plausible inference-time prompt-layout effect, not just as a vague limitation of prompting. The next step is empirical: run the proposed prompt-ablation variants and verify whether shortening, balancing, or repositioning the rubric reduces false negatives without increasing false positives.
+This gap is closed because I can now explain the prompted judge’s over-rejection behaviour as a plausible inference-time prompt-layout effect, not just as a vague limitation of prompting. The next step is empirical: run the proposed prompt-ablation variants and verify whether shortening, balancing, or repositioning the rubric reduces false negatives without increasing false positives.
