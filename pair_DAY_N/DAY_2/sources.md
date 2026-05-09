@@ -23,7 +23,7 @@ Eric Wallace, Kai Xiao, Reimar Leike, Lilian Weng, Johannes Heidecke, Alex Beute
 **Link:** [The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions](https://arxiv.org/abs/2404.13208)
 
 **Why I used it:**  
-This paper helps distinguish between formal instruction priority and actual model behavior. It argues that one source of prompt-injection vulnerability is that models may treat system prompts, developer text, user text, and third-party text as similar-priority natural language unless they are trained to respect an explicit instruction hierarchy.
+This paper helps distinguish between formal instruction priority and actual model behaviour. It argues that one source of prompt-injection vulnerability is that models may treat system prompts, developer text, user text, and third-party text as similar-priority natural language unless they are trained to respect an explicit instruction hierarchy.
 
 **Key idea I used:**  
 The system prompt should have higher formal authority, but that does not mean it acts like a hard runtime rule. SOC-01 shows that an early system-level honesty rule can still lose to competing generation pressures. The follow-up user turn did not “outrank” the system prompt; it made the system rule concrete and easier for the model to apply during the rewrite.
@@ -38,10 +38,10 @@ OpenAI. “Sharing the latest Model Spec.” OpenAI, February 12, 2025.
 **Link:** [Sharing the latest Model Spec](https://openai.com/index/sharing-the-latest-model-spec/)
 
 **Why I used it:**  
-The Model Spec explains the intended chain of command for model behavior: platform, developer, and user instructions are prioritized in a defined order. OpenAI describes this chain of command as a way to balance user and developer control within platform-level boundaries.
+The Model Spec explains the intended chain of command for model behaviour: platform, developer, and user instructions are prioritized in a defined order. OpenAI describes this chain of command as a way to balance user and developer control within platform-level boundaries.
 
 **Key idea I used:**  
-This source clarified that the SOC-01 fix should not be explained as “user prompts are stronger than system prompts.” The correct explanation is more subtle: system prompts have higher intended authority, but they are still implemented through model behavior rather than an external symbolic rule engine. A later user correction can be more effective because it is specific, local, and turns the task into violation-specific repair.
+This source clarified that the SOC-01 fix should not be explained as “user prompts are stronger than system prompts.” The correct explanation is more subtle: system prompts have higher intended authority, but they are still implemented through model behaviour rather than an external symbolic rule engine. A later user correction can be more effective because it is specific, local, and turns the task into violation-specific repair.
 
 ---
 
@@ -77,7 +77,7 @@ The explainer turns the peer’s observation into a mechanistic account. It refr
 SOC-01:
 - Weak signal: exactly 2 open Python roles
 - velocity_label = "low"
-- Forbidden behavior: assertive growth or hiring claims
+- Forbidden behaviour: assertive growth or hiring claims
 - Failure: model generated “you are rapidly scaling your team”
 - Fix: post-generation repair turn named the violation and requested a rewrite
 ```
