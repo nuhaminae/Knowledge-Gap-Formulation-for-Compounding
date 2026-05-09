@@ -26,7 +26,7 @@ Hugging Face TRL. “CPO Trainer.” Hugging Face Documentation.
 This source explains how TRL implements CPO and notes that SimPO is available through `CPOTrainer` by using `loss_type="simpo"` and `cpo_alpha=0.0`. It also explains that logged reward metrics include chosen rewards, rejected rewards, reward accuracies, and margins.
 
 **Key idea I used:**  
-The peer’s repo uses `CPOTrainer` with `CPO_BETA = 2.0`, so the explainer needed to distinguish current CPO behavior from true SimPO-style margin control. This source shows the concrete configuration path for SimPO-like training in TRL: use the CPO trainer with SimPO loss settings rather than assuming β alone provides target-margin behavior.
+The peer’s repo uses `CPOTrainer` with `CPO_BETA = 2.0`, so the explainer needed to distinguish current CPO behaviour from true SimPO-style margin control. This source shows the concrete configuration path for SimPO-like training in TRL: use the CPO trainer with SimPO loss settings rather than assuming β alone provides target-margin behaviour.
 
 ---
 
@@ -54,6 +54,6 @@ false FAIL rate on valid PASS tasks
 threshold sweep
 beta sweep
 gamma_beta_ratio sweep
-````
+```
 
 This pattern lets the asker determine whether the fix belongs in training loss configuration, SimPO margin control, or inference threshold calibration.
