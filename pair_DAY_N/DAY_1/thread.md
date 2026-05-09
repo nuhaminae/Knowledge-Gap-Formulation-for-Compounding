@@ -1,5 +1,11 @@
 # Thread — Can a Long Judge Rubric Make an LLM Over-Reject Good Outputs?
 
+---
+
+[LikedIn Thread](https://www.linkedin.com/posts/nuhamin-a-e-95n87a190_can-a-long-judge-rubric-make-an-llm-over-reject-ugcPost-7457682909521477632-RQJ_?utm_source=share&utm_medium=member_desktop&rcm=ACoAACahjWcB-GSd6J8wRonZO0Rh5aMwXM4ESuc)
+
+---
+
 ## Post 1
 
 Last week, my prompt-engineered judge had a strange pattern:
@@ -19,7 +25,7 @@ So I asked: was the judge actually weak, or did my long rubric make it too conse
 
 The judge prompt had a long prefix before every candidate output:
 
-```text
+```markdown
 You are a quality-assurance judge.
 
 A GOOD output should...
@@ -29,7 +35,7 @@ Now evaluate this candidate.
 Candidate output:
 ...
 Verdict:
-````
+```
 
 That prefix is not neutral.
 
@@ -45,13 +51,13 @@ That is useful for catching bad outputs.
 
 But it can also shift the decision boundary from:
 
-```text
+```markdown
 safe and acceptable → good
 ```
 
 to:
 
-```text
+```markdown
 not perfect → bad
 ```
 
@@ -59,19 +65,19 @@ not perfect → bad
 
 ## Post 4
 
-The second mechanism is **long-prefix behavior**.
+The second mechanism is **long-prefix behaviour**.
 
 Models do not always use long contexts evenly. In my judge prompt, the rubric came first, examples came next, and the actual candidate appeared late.
 
 That matters because good Tenacious responses are often subtle:
 
-```text
+```markdown
 “I can’t tell from the public signal alone...”
 ```
 
 or:
 
-```text
+```markdown
 “I don’t want to overstate capacity...”
 ```
 
@@ -131,13 +137,13 @@ Concrete portfolio update:
 
 I will add prompt-ablation support to `eval_prompted_judge.py`, update the model card with a prompt-only judge calibration warning, and revise the final report to separate:
 
-```text
+```markdown
 ranking ability
 ```
 
 from:
 
-```text
+```markdown
 deployment-style binary gate calibration
 ```
 
